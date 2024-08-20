@@ -34,12 +34,21 @@ const typeDefs = `#graphql
     tags: [String]
   } 
 
+  type Playlist {
+    id: ID
+    title: String
+    rating: Float
+    audio: [Audio]
+  }
+
   type Query {
     Audio: [Audio]
     Songs: [Audio]
     Books: [Audio]
     AudioByTitle(title: String!): Audio
     AudioById(id: ID!): Audio
+    Playlists: [Playlist]
+    PlaylistById(id: ID!): Playlist
   }
 `;
 
@@ -54,12 +63,23 @@ const resolvers = {
       return null;
     },
   },
+  Playlist: {
+    audio: async (parent) => {
+      const audioLoader = await new DataLoader(async keys => {
+        const audios = keys[0] as Array<string>;
+        return [ await audios.map(id => findById(id, audio))];
+      })
+      return audioLoader.load(parent.audio);
+    }
+  },
   Query: {
     Audio: () => audio,
     Songs: () => audio.filter(item => item.type === "music"),
     Books: () => audio.filter(item => item.type === "audiobook"),
     AudioByTitle: (_, {title}) => findByAttr(audio)('title')(title),
     AudioById: (_, {id}) => findById(audio, id),
+    Playlists: () => playlist,
+    PlaylistById: (_, {id}) => findById(playlist, id),
   }
 };
 
