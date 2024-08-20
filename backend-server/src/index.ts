@@ -5,7 +5,6 @@ import { audio, playlist } from './data.js';
 import DataLoader from 'dataloader';
 
 const typeDefs = `#graphql
-
   type BookInfo {
     book: Int
     series: String
@@ -32,7 +31,7 @@ const typeDefs = `#graphql
     art: String
     info: Info
     tags: [String]
-  } 
+  }
 
   type Playlist {
     id: ID
@@ -50,6 +49,23 @@ const typeDefs = `#graphql
     Playlists: [Playlist]
     PlaylistById(id: ID!): Playlist
   }
+
+  input UpdateRatingInput {
+    type: String!
+    id: ID!
+    rating: Float!
+  }
+
+  union Ratable = Playlist | Audio
+
+  type UpdateRatingResponse {
+    ratable: Ratable
+  }
+
+  type Mutation {
+    UpdateRating(updateRatingInput: UpdateRatingInput!): UpdateRatingResponse
+  }
+
 `;
 
 const findByAttr = (arr) => (attr) => (val) => arr.find(item => item[attr] === val);
@@ -60,6 +76,13 @@ const resolvers = {
     __resolveType(obj){
       if(obj.book) return 'BookInfo';
       if(obj.artist) return 'SongInfo';
+      return null;
+    },
+  },
+  Ratable: {
+    __resolveType(obj){
+      if(obj.audio) return 'Playlist';
+      if(obj.length) return 'Audio';
       return null;
     },
   },
@@ -80,6 +103,15 @@ const resolvers = {
     AudioById: (_, {id}) => findById(audio, id),
     Playlists: () => playlist,
     PlaylistById: (_, {id}) => findById(playlist, id),
+  },
+  Mutation: {
+    UpdateRating: (_, {updateRatingInput}) => {
+      const {type, id, rating} = updateRatingInput;
+      const data = type === "playlist" ? playlist : audio;
+      const item = findById(id, data);
+      item.rating = rating;
+      return {ratable: item};
+    }
   }
 };
 
