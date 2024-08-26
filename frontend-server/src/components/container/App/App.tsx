@@ -1,6 +1,9 @@
-import "./App.css";
-const App = () => {
-  return <></>;
-};
+import { PlaylistList } from "../PlaylistList/PlaylistList";
 
-export default App;
+export const App = () => {
+  return (
+    <>
+      <PlaylistList></PlaylistList>
+    </>
+  );
+};
