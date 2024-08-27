@@ -1,0 +1,5 @@
+.Card {
+  > h2 {
+    color: red;
+  }
+}

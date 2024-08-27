@@ -1,13 +1,16 @@
 import { useQuery, gql } from '@apollo/client';
 
-const GET_PLAYLISTS = gql`
+export const GET_PLAYLISTS = gql`
   query GetPlaylists {
     Playlists {
       id
       rating
       title
       audio {
+        id
         title
+        length
+        rating
           info {
             ... on BookInfo {
               series
@@ -23,7 +26,7 @@ const GET_PLAYLISTS = gql`
   }
 `;
 
-export const getPlaylists = () => useQuery(GET_PLAYLISTS);
+export const usePlaylists = () => useQuery(GET_PLAYLISTS);
 
 
 
@@ -47,7 +50,7 @@ const GET_PLAYLIST = gql`
   }
 }
 `;
-export const getPlaylist = (id: string) => useQuery(GET_PLAYLIST, {
+export const usePlaylist = (id: string) => useQuery(GET_PLAYLIST, {
   variables:{
     playlistById: id
   }
