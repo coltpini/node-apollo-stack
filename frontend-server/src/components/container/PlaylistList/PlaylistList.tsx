@@ -1,6 +1,10 @@
 import { usePlaylists } from "../../../data/Playlist/playlist";
+import { minToHrsAndMins } from "../../../utils/conversion";
 import { Card } from "../../view/Card/Card";
 import { List } from "../../view/List/List";
+
+const hrsAndMinToString = ({ min, hr }: { min: number; hr: number }) =>
+  `${hr || 0}:${min || 0}`;
 
 export const PlaylistList = () => {
   const { loading, error, data } = usePlaylists();
@@ -15,9 +19,11 @@ export const PlaylistList = () => {
               <Card
                 key={audio.id}
                 title={audio.title}
-                length={audio.length}
-                rating={audio.rating}
-                info={audio.info}
+                details={{
+                  length: hrsAndMinToString(minToHrsAndMins(audio.length)),
+                  rating: audio.rating,
+                  info: audio.info.album || audio.info.series,
+                }}
               ></Card>
             ))}
           </List>

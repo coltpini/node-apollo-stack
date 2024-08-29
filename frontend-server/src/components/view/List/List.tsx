@@ -11,7 +11,7 @@ export const List = ({ children, title }: PropsWithChildren<ListProps>) => {
       <h2>{title}</h2>
       <ul>
         {children?.map((child) => (
-          <li>{child}</li>
+          <li key={child.textContent}>{child}</li>
         ))}
       </ul>
     </section>

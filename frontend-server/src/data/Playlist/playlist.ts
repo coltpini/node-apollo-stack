@@ -25,8 +25,7 @@ export const GET_PLAYLISTS = gql`
     }
   }
 `;
-
-export const usePlaylists = () => useQuery(GET_PLAYLISTS);
+export const usePlaylists = (query=GET_PLAYLISTS) => useQuery(query);
 
 
 
@@ -47,10 +46,11 @@ const GET_PLAYLIST = gql`
       }
     }
     title
+    id
   }
 }
 `;
-export const usePlaylist = (id: string) => useQuery(GET_PLAYLIST, {
+export const usePlaylist = (id: string, query=GET_PLAYLIST) => useQuery(query, {
   variables:{
     playlistById: id
   }

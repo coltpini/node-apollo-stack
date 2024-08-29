@@ -68,8 +68,10 @@ const typeDefs = `#graphql
 
 `;
 
-const findByAttr = (arr) => (attr) => (val) => arr.find(item => item[attr] === val);
-const findById = (val, arr) => findByAttr(arr)('id')(val);
+const findByAttr = (attr) => (arr) => (val) => arr.find(item => item[attr] === val);
+const findById = findByAttr('id');
+const findByTitle = findByAttr('title');
+
 
 const resolvers = {
   Info: {
@@ -90,7 +92,7 @@ const resolvers = {
     audio: async (parent) => {
       const audioLoader = await new DataLoader(async keys => {
         const audios = keys[0] as Array<string>;
-        return [ await audios.map(id => findById(id, audio))];
+        return [ await audios.map(id => findById(audio)(id))];
       })
       return audioLoader.load(parent.audio);
     }
@@ -99,16 +101,16 @@ const resolvers = {
     Audio: () => audio,
     Songs: () => audio.filter(item => item.type === "music"),
     Books: () => audio.filter(item => item.type === "audiobook"),
-    AudioByTitle: (_, {title}) => findByAttr(audio)('title')(title),
-    AudioById: (_, {id}) => findById(audio, id),
+    AudioByTitle: (_, {title}) => findByTitle(audio)(title),
+    AudioById: (_, {id}) => findById(audio)(id),
     Playlists: () => playlist,
-    PlaylistById: (_, {id}) => findById(playlist, id),
+    PlaylistById: (_, {id}) => findById(playlist)(id),
   },
   Mutation: {
     UpdateRating: (_, {updateRatingInput}) => {
       const {type, id, rating} = updateRatingInput;
       const data = type === "playlist" ? playlist : audio;
-      const item = findById(id, data);
+      const item = findById(data)(id);
       item.rating = rating;
       return {ratable: item};
     }

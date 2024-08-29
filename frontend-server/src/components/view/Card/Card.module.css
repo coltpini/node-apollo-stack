@@ -1,5 +1,34 @@
 .Card {
+  --emp-color: var(--color-100, green);
+
+
+  box-shadow:  var(--color-shadow-100);
+  border-radius: 0.2em;
+  display: inline-block;
+  padding: 2em;
+  width: 15em;
+  margin: 1em;
+
   > h2 {
-    color: red;
+    color: var(--emp-color);
+    margin: 0 0 0.2em 0;
+    font-weight: 500;
+    font-size: 1.3em;
+  }
+  > ul {
+    padding: 0;
+    margin: 0;
+
+    & > li {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 0.8em;
+      > em {
+        color: var(--emp-color);
+        font-weight: 300;
+        font-size: 0.6em;
+      }
+    }
   }
 }

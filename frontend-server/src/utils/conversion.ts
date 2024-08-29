@@ -1,0 +1,1 @@
+export const minToHrsAndMins = (min: number) => ({min: min%60, hr: Math.floor(min/60)});
