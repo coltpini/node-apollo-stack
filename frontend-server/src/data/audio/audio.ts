@@ -1,5 +1,20 @@
 import { useQuery, gql } from '@apollo/client';
 
+
+
+export type Audio = {
+  id: string,
+  rating: number,
+  title: string,
+  length: number,
+  info: {
+    author: string,
+    series: string,
+    artist: string,
+    album: string,
+  }
+};
+
 const GET_AUDIOS = gql`
   query getAudio {
     Audio {

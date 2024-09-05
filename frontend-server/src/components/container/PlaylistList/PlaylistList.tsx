@@ -1,4 +1,4 @@
-import { usePlaylists } from "../../../data/Playlist/playlist";
+import { Playlist, usePlaylists } from "../../../data/playlist/playlist";
 import { minToHrsAndMins } from "../../../utils/conversion";
 import { Card } from "../../view/Card/Card";
 import { List } from "../../view/List/List";
@@ -12,7 +12,7 @@ export const PlaylistList = () => {
   if (error) return <p>Error! {error.message}</p>;
   return (
     <>
-      {data.Playlists.map((playlist) => {
+      {data.Playlists.map((playlist: Playlist) => {
         return (
           <List key={playlist.id} title={playlist.title}>
             {playlist.audio.map((audio) => (

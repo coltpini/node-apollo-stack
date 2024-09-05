@@ -1,19 +1,19 @@
-import { PropsWithChildren } from "react";
 import classes from "./List.module.css";
 
 type ListProps = {
-  title: "Title";
+  title: string;
+  children?: React.ReactNode[];
 };
 
-export const List = ({ children, title }: PropsWithChildren<ListProps>) => {
+export const List = ({ children, title }: ListProps) => {
   return (
     <section className={classes.List}>
       <h2>{title}</h2>
-      <ul>
-        {children?.map((child) => (
-          <li key={child.textContent}>{child}</li>
+      <ol>
+        {children?.map((child: any) => (
+          <li key={child.textContent || child}>{child}</li>
         ))}
-      </ul>
+      </ol>
     </section>
   );
 };

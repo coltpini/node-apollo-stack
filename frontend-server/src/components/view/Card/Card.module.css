@@ -1,5 +1,6 @@
 .Card {
-  --emp-color: var(--color-100, green);
+  --highlight-color: var(--color-100, green);
+  --secondary-color: var(--color-200, blue);
 
 
   box-shadow:  var(--color-shadow-100);
@@ -10,7 +11,7 @@
   margin: 1em;
 
   > h2 {
-    color: var(--emp-color);
+    color: var(--highlight-color);
     margin: 0 0 0.2em 0;
     font-weight: 500;
     font-size: 1.3em;
@@ -25,7 +26,7 @@
       margin: 0;
       font-size: 0.8em;
       > em {
-        color: var(--emp-color);
+        color: var(--secondary-color);
         font-weight: 300;
         font-size: 0.6em;
       }

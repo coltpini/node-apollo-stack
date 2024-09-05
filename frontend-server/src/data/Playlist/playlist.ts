@@ -1,4 +1,12 @@
 import { useQuery, gql } from '@apollo/client';
+import {Audio} from '../audio/audio';
+
+export type Playlist = {
+  id: string,
+  rating: number,
+  title: string,
+  audio: [Audio]
+};
 
 export const GET_PLAYLISTS = gql`
   query GetPlaylists {
@@ -45,6 +53,7 @@ const GET_PLAYLIST = gql`
         }
       }
     }
+    rating
     title
     id
   }
