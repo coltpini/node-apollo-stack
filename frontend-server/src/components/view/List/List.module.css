@@ -14,18 +14,19 @@
     position: relative;
 
     &::before {
+      font-size: 0.5em;
       content: counter(list-item);
       position: absolute;
       box-sizing: border-box;
-      padding-left: 0.3em;
+      padding-left: 0.5em;
       padding-top: 0.1em;
-      top: 1em;
-      left: 1em;
+      top: 2em;
+      left: 2em;
       background: var(--highlight-color);
       color: white;
       border-bottom-right-radius: 100%;
-      height: 1.5em;
-      width: 1.5em;
+      height: 2em;
+      width: 2em;
     }
    }
   }
